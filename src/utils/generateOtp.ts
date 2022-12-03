@@ -1,3 +1,3 @@
-module.exports = function OTPGenerator(){
+export default function OTPGenerator(){
     return Math.floor(1000 + Math.random() * 9000);
 }

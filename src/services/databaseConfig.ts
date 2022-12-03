@@ -1,5 +1,5 @@
-const mongoose = require("mongoose")
-const {config} = require("dotenv")
+import mongoose from "mongoose";
+import { config } from "dotenv";
 
 function Database_Connection(){
   config()
@@ -12,19 +12,18 @@ function Database_Connection(){
       useNewUrlParser: true,
       useUnifiedTopology: true,
     };
-    const uri = process.env.DB_URI 
+    const uri: string = process.env.DB_URI!
     const conn = mongoose.connect(uri, options)
     conn
     .then(
       ()=>{
           console.log(`You have successfully established a database connection`)
       })
-    .catch((err=>{console.error(`An Error occured trying to establish a database connection:: Error=> ${err}`)}))
+    .catch(((err: any) =>{console.error(`An Error occured trying to establish a database connection:: Error=> ${err}`)}))
   } catch (error) {
     console.error(`An Error occured trying to a database connection:: Error=> ${error}`)
   }
 }
 
-module.exports = {
-  Database_Connection
-}
+
+export default Database_Connection

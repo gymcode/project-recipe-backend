@@ -8,24 +8,23 @@ import { RegistrationSchema } from "../utils/joiValidation"
 // middlewares 
 import { userValidationMiddleware, isUserAuthenticated } from "../middleware/userMiddleware"
 
-import userController from "../controller/userController"
+import {userRegistration, userLogin, getUser, confirmOTP, resendOTP, resetPassword, logOut} from "../controller/userController"
 
 // route to register a new user 
-router.post('/register', userValidationMiddleware(RegistrationSchema), userController.userRegistration)
+router.post('/register', userValidationMiddleware(RegistrationSchema), userRegistration())
 
-router.put("/confirm-otp", userController.confirmOTP)
+router.put("/confirm-otp", confirmOTP())
 
-router.get("/resend", userController.resendOTP)
+router.get("/resend", resendOTP())
 
-router.put("/reset", userController.resetPin)
+router.put("/reset", resetPassword())
 
-router.post('/login', userController.userLogin)
+router.post('/login', userLogin())
 
-router.get("/user", isUserAuthenticated(client), userController.getUser)
+router.get("/user", isUserAuthenticated(client), getUser())
 
-router.delete("/logout",isUserAuthenticated(client), userController.logOut)
+router.delete("/logout",isUserAuthenticated(client), logOut())
 
-router.delete("/delete", isUserAuthenticated(client), userController.delete)
 
 
 export default router

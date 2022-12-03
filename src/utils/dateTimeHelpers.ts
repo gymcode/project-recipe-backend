@@ -1,4 +1,4 @@
-function getMinutes(minutes){
+export function getMinutes(minutes: number){
     const currentDate = new Date()
     const newMinutes = currentDate.getMinutes() + minutes
     currentDate.setMinutes(newMinutes)
@@ -6,16 +6,7 @@ function getMinutes(minutes){
     return currentDate
 }
 
-function diff_Days_Weeks(startDate, endDate, limit = 1){
-    const start_date = new Date(startDate)
-    const end_date = new Date(endDate)
-
-    const diffTime = Math.abs(end_date - start_date);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24 * limit)); 
-    return diffDays;
-}
-
-function getCurrentDateTime(hours){
+export function getCurrentDateTime(hours: number){
     const currentDate = new Date()
 
     // currentDate.setHours(0, 0, 0, 0);
@@ -26,21 +17,14 @@ function getCurrentDateTime(hours){
     return currentDate
 }
 
-function pad(str){
+function pad(str: number){
     return str.toString().padStart(2, "0")    
 }
 
-function getDate(date){
+export function getDate(date: Date){
     const formattedDate = [
         date.getFullYear(),pad(date.getMonth() + 1),pad(date.getDate())
         ].join("-")
     return formattedDate
 }
 
-
-module.exports = {
-    getMinutes,
-    diff_Days_Weeks,
-    getDate,
-    getCurrentDateTime,
-}
