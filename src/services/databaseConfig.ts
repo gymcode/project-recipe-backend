@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 import { config } from "dotenv";
 
-function Database_Connection(){
-  config()
+function Database_Connection() {
+  config();
   try {
     const options = {
       autoIndex: false, // Don't build indexes
@@ -12,18 +12,24 @@ function Database_Connection(){
       useNewUrlParser: true,
       useUnifiedTopology: true,
     };
-    const uri: string = process.env.DB_URI!
-    const conn = mongoose.connect(uri, options)
+    const uri: string = process.env.DB_URI!;
+    const conn = mongoose.connect(uri, options);
     conn
-    .then(
-      ()=>{
-          console.log(`You have successfully established a database connection`)
+      .then(() => {
+        console.log(`You have successfully established a database connection`);
       })
-    .catch(((err: any) =>{console.error(`An Error occured trying to establish a database connection:: Error=> ${err}`)}))
+      .catch((err: any) => {
+        console.error(
+          `An Error occured trying to establish a database connection:: Error=> ${err}`
+        );
+        process
+      });
   } catch (error) {
-    console.error(`An Error occured trying to a database connection:: Error=> ${error}`)
+    console.error(
+      `An Error occured trying to a database connection:: Error=> ${error}`
+    );
+    process.exitCode = 1
   }
 }
 
-
-export default Database_Connection
+export default Database_Connection;

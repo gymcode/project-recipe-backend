@@ -35,8 +35,8 @@ export function userRegistration() {
                 request.msisdn,
                 request.countryCode
             );
-            if (response == undefined) throw new Error();
-            const { error, msg } = response;
+
+            const { error, msg } = response!;
 
             if (error) throw new Error(msg);
             const msisdn = msg;
@@ -94,8 +94,7 @@ export function confirmOTP() {
                 request.msisdn,
                 request.countryCode
             );
-            if (response == undefined) throw new Error()
-            const { error, msg } = response;
+            const { error, msg } = response!;
 
             if (error) throw new Error(msg)
             const msisdn = msg;
@@ -167,8 +166,7 @@ export function resendOTP() {
                 request.msisdn,
                 request.countryCode
             );
-            if (response == undefined) throw new Error()
-            const { error, msg } = response;
+            const { error, msg } = response!;
 
             if (error) throw new Error(msg)
             const msisdn = msg;
@@ -216,9 +214,7 @@ export function resetPassword() {
                 request.msisdn,
                 request.countryCode
             );
-            if (response == undefined) throw new Error()
-
-            const { error, msg } = response;
+            const { error, msg } = response!;
 
             if (error) throw new Error(msg)
             const msisdn = msg;
@@ -287,8 +283,7 @@ export function userLogin() {
                 request.msisdn,
                 request.countryCode
             );
-            if (response == undefined) throw new Error()
-            const { error, msg } = response;
+            const { error, msg } = response!;
 
             if (error) throw new Error(msg)
             const msisdn = msg;
