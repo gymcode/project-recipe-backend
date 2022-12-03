@@ -1,0 +1,17 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "pb-production-db-server.mysql.database.azure.com",
+            "port": 3306,
+            "driver": "MySQL",
+            "database": "pbss",
+            "username": "isaolPB",
+            "password": "Principalbooks#2o22",
+            "name": "My Conn"
+        }
+    ]
+}
