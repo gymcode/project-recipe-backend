@@ -1,5 +1,4 @@
-import jwt, {JwtPayload, Secret} from 'jsonwebtoken'
-import {IPayload} from "./index"
+import jwt, {Secret} from 'jsonwebtoken'
 
 const ACCESS_SCRETE_KEY: Secret = String(process.env.ACCESS_TOKEN_SECRET)
 
@@ -16,7 +15,7 @@ export async function signJwtWebToken(user:any, client: any){
 
 export function verifySignedJwtWebToken(token: string, secret: Secret){
     try {
-        const payload: string | JwtPayload | IPayload = jwt.verify(token, secret)
+        const payload: any = jwt.verify(token, secret)
         return {payload, error: false, expired: false};
     } catch (error:any) {
         return {

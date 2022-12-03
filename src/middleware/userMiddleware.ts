@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express"
 import { wrapFailureResponse } from "../shared/response"
-import { verifySignedJwtWebToken } from "../utils/jwt_helpers"
+import { verifySignedJwtWebToken } from "../security/jwt"
 import User from "../models/User"
 import jwt, { Secret } from 'jsonwebtoken'
 import Joi from "joi"

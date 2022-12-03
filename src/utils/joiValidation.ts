@@ -7,12 +7,10 @@ export const RegistrationSchema = Joi.object({
     isoCode: Joi.string()   
 })
 
-const UpdateUserSchema = Joi.object({
+export const UpdateUserSchema = Joi.object({
     username:  Joi.string().alphanum().min(3).max(30).required(),
     email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
     gender: Joi.string()
 })
 
-
-module.exports = {RegistrationSchema, UpdateUserSchema}
 
