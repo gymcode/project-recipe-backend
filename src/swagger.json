@@ -4,5 +4,43 @@
         "version": "1.0.0",
         "title": "Haute Cuisine Documentation",
         "description": "APIs that manage the main functionalities for the haute cuisine web application"
+    },
+    "tags": [
+        {
+            "name": "user",
+            "description": "This contains all functionalities for user"
+        }
+    ],
+    "paths": {
+        "/user/signup":{
+            "post": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "route for users to sign up onto haute cuisine",
+                "operationId": "addUser",
+                "requestBody": {
+                    "description": "Create a new pet in the store",
+                    "content": {
+                        "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/Pet"
+                        }
+                        },
+                        "application/xml": {
+                        "schema": {
+                            "$ref": "#/components/schemas/Pet"
+                        }
+                        },
+                        "application/x-www-form-urlencoded": {
+                        "schema": {
+                            "$ref": "#/components/schemas/Pet"
+                        }
+                        }
+                    },
+                    "required": true
+                }
+            }
+        }
     }
 }
