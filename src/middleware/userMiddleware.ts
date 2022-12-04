@@ -1,54 +1,70 @@
-import { Request, Response, NextFunction } from "express"
-import { wrapFailureResponse } from "../shared/response"
-import { verifySignedJwtWebToken } from "../security/jwtSecurity"
-import{ Secret } from 'jsonwebtoken'
-import Joi from "joi"
+import { Request, Response, NextFunction } from "express";
+import { wrapFailureResponse } from "../shared/response";
+import { verifySignedJwtWebToken } from "../security/jwtSecurity";
+import { Secret } from "jsonwebtoken";
+import User from "../models/User"
+import Joi from "joi";
 
+const SCRETE_KEY: Secret = String(process.env.ACCESS_TOKEN_SECRET);
 
-const SCRETE_KEY: Secret = String(process.env.ACCESS_TOKEN_SECRET)
+export function userValidationMiddleware(schema: Joi.ObjectSchema<any>) {
+  return (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { error } = schema.validate(req.body);
 
-export function userValidationMiddleware (schema: Joi.ObjectSchema<any>){
-    return (req: Request, res: Response, next: NextFunction)=>{
-        try {
-            const {error} =  schema.validate(req.body)
-
-            if (error == undefined) return next()
-            wrapFailureResponse(res, 422,error.details[0].message, error)
-        } catch (error) {
-            console.error(error)
-        }
+      if (error != undefined)
+        return wrapFailureResponse({
+          res: res,
+          statusCode: 422,
+          errorMsg: error.details[0].message,
+          detailedError: error,
+        });
+      return next();
+    } catch (error: any) {
+      console.error(error);
+      return wrapFailureResponse({
+        res: res,
+        errorMsg: `An Error occured:${error.message}`,
+        statusCode: 500,
+        detailedError: error,
+      });
     }
+  };
 }
 
-export function isUserAuthenticated(client: any){
-    return async (req: Request, res: Response, next: NextFunction) =>{
-        try {
-            let payload;
+export function isUserAuthenticated(client: any) {
+  return async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      // getting from the headers
+      const authHeader = req.headers["authorization"];
 
-            // getting from the headers 
-            const authHeader = req.headers["authorization"]
+      if (authHeader == undefined)
+        throw new Error("Authorization header not found");
 
-            if (authHeader == undefined) return wrapFailureResponse(res, 400, "Authorization header not found", null)
+      if (!authHeader.startsWith("Bearer"))
+        throw new Error("Authorization header must start with /Bearer /");
 
-            if (!authHeader.startsWith("Bearer")) return wrapFailureResponse(res, 400, "Authorization header must start with /Bearer /", null)
+      const token = authHeader.split(" ")[1];
+      console.log(token);
 
-            const token = authHeader.substring(7)
-            console.log(token)
-            let accessToken = token
-            const data = verifySignedJwtWebToken(token, SCRETE_KEY)
+      const data = verifySignedJwtWebToken(token, SCRETE_KEY);
 
-            payload = data.payload
+      if (data.payload == null) throw new Error("Un-authorized access")
 
-            if (data.payload == null && !data.expired) return wrapFailureResponse(res, 400, "Un-authorized access", null)
+      // use the id from the payload to get the user details
+      const user = await User.findOne({ _id: data.payload._id }).exec()
+      const user_info = {user: user, token: token}
+      res.locals.user_info = user_info        
 
-            // check if the token is expired
-            
-            
-            // res.locals.user_info = user_info
-
-            return next()
-        } catch (error) {
-            console.error(error)
-        }
+      return next();
+    } catch (error: any) {
+      console.error(error);
+      return wrapFailureResponse({
+        res: res,
+        errorMsg: `An Error occured:${error.message}`,
+        statusCode: 500,
+        detailedError: error,
+      });
     }
+  };
 }

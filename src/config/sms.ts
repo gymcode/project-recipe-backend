@@ -1,23 +1,5 @@
-const AfricasTalking = require("africastalking")
-const axios = require("axios")
+import axios from "axios"
 
-async function SendSms(msisdn: string, message: string){
-    const africastalking = AfricasTalking({
-        apiKey: process.env.AFRICATALKING_API_KEY,
-        username: process.env.AFRICASTALKING_USERNAME
-    })
-
-    try {
-        const response = await africastalking.SMS.send({
-            to: `+233268211334`,
-            message: message,
-            from: 'axlxyt'
-        })
-        console.log(response)
-    } catch (error) {
-        console.error(error)
-    }
-}
 
 export async function NaloSendSms(msisdn: string, message: string){
     try {
