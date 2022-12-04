@@ -106,7 +106,7 @@ export function confirmOTP() {
             // get the otp from the cached data
             const storageKey = `${user._id}_OTP`;
             const value = await client.get(storageKey);
-            const data = JSON.parse(value);
+            const data = JSON.parse(value!);
 
             // checking for the expire by comparison
             const currentDateTime = new Date();
