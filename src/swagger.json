@@ -1,0 +1,8 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Haute Cuisine Documentation",
+        "description": "APIs that manage the main functionalities for the haute cuisine web application"
+    }
+}
