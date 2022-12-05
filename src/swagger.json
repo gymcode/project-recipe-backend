@@ -5,6 +5,63 @@
         "title": "Haute Cuisine Documentation",
         "description": "APIs that manage the main functionalities for the haute cuisine web application"
     },
+    "host": "localhost:8080",
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "definitions": {
+        "user": {
+            "type": "object",
+            "properties": {
+                "firstName": {
+                    "type": "string"
+                },
+                "otherNames": {
+                    "type": "string"
+                },
+                "msisdn": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "countryCode": {
+                    "type": "string"
+                },
+                "isoCode": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "string"
+                },
+                "invalidLoginAttemps": {
+                    "type": "number"
+                },
+                "lockCoeff": {
+                    "type": "number"
+                },
+                "lockPeriod": {
+                    "type": "string"
+                },
+                "userLockStatus": {
+                    "type": "boolean"
+                },
+                "activated": {
+                    "type": "boolean"
+                },
+                "isOtpConfirmed": {
+                    "type": "boolean"
+                },
+                "version": {
+                    "type": "number"
+                }
+            }      
+        }
+    },
     "tags": [
         {
             "name": "user",
@@ -22,28 +79,7 @@
                     "user"
                 ],
                 "summary": "route for users to sign up onto haute cuisine",
-                "operationId": "addUser",
-                "requestBody": {
-                    "description": "Create a new pet in the store",
-                    "content": {
-                        "application/json": {
-                        "schema": {
-                            "$ref": "#/components/schemas/Pet"
-                        }
-                        },
-                        "application/xml": {
-                        "schema": {
-                            "$ref": "#/components/schemas/Pet"
-                        }
-                        },
-                        "application/x-www-form-urlencoded": {
-                        "schema": {
-                            "$ref": "#/components/schemas/Pet"
-                        }
-                        }
-                    },
-                    "required": true
-                }
+                "operationId": "addUser"
             }
         }
     }
