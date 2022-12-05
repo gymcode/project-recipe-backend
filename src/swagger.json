@@ -9,6 +9,10 @@
         {
             "name": "user",
             "description": "This contains all functionalities for user"
+        },
+        {
+            "name": "recipe",
+            "description": "This contains all functionalities for recipies"
         }
     ],
     "paths": {
