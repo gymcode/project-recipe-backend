@@ -11,7 +11,7 @@
         "https"
     ],
     "definitions": {
-        "user": {
+        "user model": {
             "type": "object",
             "properties": {
                 "firstName": {
@@ -59,8 +59,93 @@
                 "version": {
                     "type": "number"
                 }
-            }      
-        }
+            }
+        },
+        "user dto": {
+           "type": "object",
+           "properties": {
+                "firstName": {
+                    "type": "string"
+                },
+                "otherNames": {
+                    "type": "string"
+                },
+                "msisdn": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "confirmPassword": {
+                    "type": "string"
+                }, 
+                "countryCode": {
+                    "type": "string"
+                },
+                "isoCode": {
+                    "type": "string"
+                }
+           }
+        },
+        "success response": {
+            "type": "object",
+            "properties": {
+                 "code": {
+                     "type": "string"
+                 },
+                 "msg": {
+                     "type": "string"
+                 },
+                 "data": {
+                     "type": "object"
+                 },
+                 "token": {
+                    "type": "string"
+                },
+                 "error": {
+                     "type": "object",
+                     "properties": {
+                        "error": {
+                            "type": "boolean"
+                        },
+                        "errMsg": {
+                            "type": "string"
+                        },
+                        "detailedError": {
+                            "type": "object"
+                        }
+                     }
+                 }
+            }
+         },
+         "error response": {
+            "type": "object",
+            "properties": {
+                 "code": {
+                     "type": "string"
+                 },
+                 "msg": {
+                     "type": "string"
+                 },
+                 "data": {
+                     "type": "null"
+                 },
+                 "error": {
+                     "type": "object",
+                     "properties": {
+                        "error": {
+                            "type": "boolean"
+                        },
+                        "errMsg": {
+                            "type": "string"
+                        },
+                        "detailedError": {
+                            "type": "object"
+                        }
+                     }
+                 }
+            }
+         }
     },
     "tags": [
         {
@@ -79,6 +164,28 @@
                     "user"
                 ],
                 "summary": "route for users to sign up onto haute cuisine",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "the account we want to create for a user",
+                        "schema": {
+                            "$ref": "#/definitions/user dto"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema":{
+                            "$ref": "#/definitions/success response"
+                        }
+
+                    }
+                },
                 "operationId": "addUser"
             }
         }

@@ -1,4 +1,3 @@
-import {Response} from "express"
 import { CODE_FAILURE, CODE_SUCCESS } from "./constants"
 import {IErrorResponse, ISuccessResponse} from "./index"
 
