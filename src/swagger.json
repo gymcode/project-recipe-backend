@@ -5,7 +5,7 @@
         "title": "Haute Cuisine Documentation",
         "description": "APIs that manage the main functionalities for the haute cuisine web application"
     },
-    "host": "localhost:8080",
+    "host": "localhost:8080/api/v1",
     "schemes": [
         "http",
         "https"
@@ -158,7 +158,7 @@
         }
     ],
     "paths": {
-        "/user/signup":{
+        "/users/register":{
             "post": {
                 "tags": [
                     "user"
@@ -179,11 +179,16 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "Ok",
                         "schema":{
                             "$ref": "#/definitions/success response"
                         }
-
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema":{
+                            "$ref": "#/definitions/error response"
+                        }
                     }
                 },
                 "operationId": "addUser"

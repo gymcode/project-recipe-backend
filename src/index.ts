@@ -17,7 +17,7 @@ app.use(express.json())
 app.use('/haute-cuisine-api-docs', SwaggerUi.serve, SwaggerUi.setup(SwaggerDocs));
 
 // all user routes
-app.use(`${BASE_URL}/user`, userRoutes)
+app.use(`${BASE_URL}/users`, userRoutes)
 app.listen(port, () => {
     // establish the database connection 
     Database_Connection()

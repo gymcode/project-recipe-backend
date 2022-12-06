@@ -22,6 +22,7 @@ import generateOtp from "../utils/generateOtp";
 import _ from "lodash";
 import { signJwtWebToken } from "../security/jwtSecurity";
 import { GenerateAndStoreCode } from "../utils/generateAndHashCode";
+import { CodeHash } from "../security/passwordSecurity";
 
 /*
 register a new user 
@@ -48,11 +49,11 @@ export function userRegistration() {
             // add user
             const userInput = new User({
                 firstName: request.firstName,
-                othrNames: request.otherNames,
+                otherNames: request.otherNames,
                 msisdn: msisdn,
                 countryCode: request.countryCode,
                 isoCode: request.isoCode,
-                password: request.password
+                password: CodeHash(request.password)
             });
             user = await userInput.save();
             if (user == null) throw new Error(REQUEST_NOT_PERFORMED);

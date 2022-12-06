@@ -11,7 +11,7 @@ export function userValidationMiddleware(schema: Joi.ObjectSchema<any>) {
   return (req: Request, res: Response, next: NextFunction) => {
     try {
       const { error } = schema.validate(req.body);
-
+      console.log("this is an error", error)
       if (error != undefined)
         return wrapFailureResponse({
           res: res,
