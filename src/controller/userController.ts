@@ -108,7 +108,7 @@ export function confirmOTP() {
             const storageKey = `${user._id}_OTP`;
             const value = await client.get(storageKey);
             const data = JSON.parse(value!);
-
+            console.log(value)
             // checking for the expire by comparison
             const currentDateTime = new Date();
             if (currentDateTime > new Date(data.expire_at))
