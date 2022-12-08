@@ -21,7 +21,7 @@ router.put("/reset", resetPassword())
 
 router.post('/login', userLogin())
 
-router.get("/user", isUserAuthenticated(client), getUser())
+router.get("/", isUserAuthenticated(client), getUser())
 
 router.delete("/logout",isUserAuthenticated(client), logOut())
 

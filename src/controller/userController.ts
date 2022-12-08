@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { RegisterDTO, ConfirmOTPDTO } from "../dto/request/user.dto";
+import { RegisterDTO, ConfirmOTPDTO, ResendDTO } from "../dto/request/user.dto";
 import { CountryMsisdnValidation } from "../utils/msisdnValidation";
 import { wrapFailureResponse, wrapSuccessResponse } from "../shared/response";
 import GenerateOTP from "../utils/generateOtp";
@@ -162,7 +162,7 @@ it should resend otp
 export function resendOTP() {
     return async (req: Request, res: Response) => {
         try {
-            const request = req.body;
+            const request: ResendDTO = req.body;
             const response = CountryMsisdnValidation(
                 request.msisdn,
                 request.countryCode

@@ -61,7 +61,7 @@
                 }
             }
         },
-        "user dto": {
+        "registerDTO": {
            "type": "object",
            "properties": {
                 "firstName": {
@@ -87,6 +87,45 @@
                 }
            }
         },
+        "confirmOTPDTO": {
+            "type": "object",
+            "properties": {
+                 "msisdn": {
+                     "type": "string"
+                 },
+                 "code": {
+                     "type": "string"
+                 },
+                 "countryCode": {
+                     "type": "string"
+                 }
+            }
+         },
+         "loginDTO": {
+            "type": "object",
+            "properties": {
+                 "msisdn": {
+                     "type": "string"
+                 },
+                 "code": {
+                     "type": "string"
+                 },
+                 "password": {
+                     "type": "string"
+                 }
+            }
+         },
+         "resendDTO": {
+            "type": "object",
+            "properties": {
+                 "msisdn": {
+                     "type": "string"
+                 },
+                 "countryCode": {
+                     "type": "string"
+                 }
+            }
+         },
         "success response": {
             "type": "object",
             "properties": {
@@ -158,6 +197,42 @@
         }
     ],
     "paths": {
+        "/users/login":{
+            "post": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "route for users to login into haute cuisine",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "the user has to log in using this route",
+                        "schema": {
+                            "$ref": "#/definitions/loginDTO"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "schema":{
+                            "$ref": "#/definitions/success response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema":{
+                            "$ref": "#/definitions/error response"
+                        }
+                    }
+                },
+                "operationId": "loginUser"
+            }
+        },
         "/users/register":{
             "post": {
                 "tags": [
@@ -170,7 +245,7 @@
                         "name": "body",
                         "description": "the account we want to create for a user",
                         "schema": {
-                            "$ref": "#/definitions/user dto"
+                            "$ref": "#/definitions/registerDTO"
                         }
                     }
                 ],
@@ -192,6 +267,180 @@
                     }
                 },
                 "operationId": "addUser"
+            }
+        },
+        "/users/confirm-otp":{
+            "put": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "route for users to confirm the otp",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "the user has to confirm the otp generated and sent",
+                        "schema": {
+                            "$ref": "#/definitions/confirmOTPDTO"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "schema":{
+                            "$ref": "#/definitions/success response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema":{
+                            "$ref": "#/definitions/error response"
+                        }
+                    }
+                },
+                "operationId": "confirmOTP"
+            }
+        },
+        "/users/reset":{
+            "put": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "route for users to reset their password",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "the user is able to reset their password when necessary",
+                        "schema": {
+                            "$ref": "#/definitions/confirmOTPDTO"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "schema":{
+                            "$ref": "#/definitions/success response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema":{
+                            "$ref": "#/definitions/error response"
+                        }
+                    }
+                },
+                "operationId": "resetAccount"
+            }
+        },
+        "/users/":{
+            "get": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "route to get a user",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "the route to get a user"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "schema":{
+                            "$ref": "#/definitions/success response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema":{
+                            "$ref": "#/definitions/error response"
+                        }
+                    }
+                },
+                "operationId": "getUserDetails"
+            }
+        },
+        "/users/resend":{
+            "get": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "route for users to resend OTP (One Time Password)",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "the user has to confirm the otp generated and sent",
+                        "schema": {
+                            "$ref": "#/definitions/resendDTO"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "schema":{
+                            "$ref": "#/definitions/success response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema":{
+                            "$ref": "#/definitions/error response"
+                        }
+                    }
+                },
+                "operationId": "resendOTP"
+            }
+        },
+        "/users/logout":{
+            "delete": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "route for users to logout",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "the user uses this endpoint to logout"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "schema":{
+                            "$ref": "#/definitions/success response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema":{
+                            "$ref": "#/definitions/error response"
+                        }
+                    }
+                },
+                "operationId": "logout"
             }
         }
     }
