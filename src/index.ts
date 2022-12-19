@@ -18,8 +18,10 @@ app.use('/haute-cuisine-api-docs', SwaggerUi.serve, SwaggerUi.setup(SwaggerDocs)
 
 // all user routes
 app.use(`${BASE_URL}/users`, userRoutes)
-app.listen(port, () => {
-    // establish the database connection 
-    Database_Connection()
-    console.log(`Example app listening on port ${port}`)
-},)
+
+Database_Connection().then(()=>{
+    app.listen(port, () => {
+        // establish the database connection 
+        console.log(`Example app listening on port ${port}`)
+    })    
+})

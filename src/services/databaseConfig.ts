@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { config } from "dotenv";
 
-function Database_Connection() {
+async function Database_Connection() {
   config();
   try {
     const options = {
