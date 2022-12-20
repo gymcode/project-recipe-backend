@@ -1,190 +1,198 @@
 {
-    "swagger": "2.0",
+    "openapi": "3.0.0",
     "info": {
         "version": "1.0.0",
         "title": "Haute Cuisine Documentation",
         "description": "APIs that manage the main functionalities for the haute cuisine web application"
     },
-    "host": "localhost:8080/api/v1",
-    "schemes": [
-        "http",
-        "https"
-    ],
-    "definitions": {
-        "user model": {
-            "type": "object",
-            "properties": {
-                "firstName": {
-                    "type": "string"
-                },
-                "otherNames": {
-                    "type": "string"
-                },
-                "msisdn": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                },
-                "countryCode": {
-                    "type": "string"
-                },
-                "isoCode": {
-                    "type": "string"
-                },
-                "email": {
-                    "type": "string"
-                },
-                "gender": {
-                    "type": "string"
-                },
-                "invalidLoginAttemps": {
-                    "type": "number"
-                },
-                "lockCoeff": {
-                    "type": "number"
-                },
-                "lockPeriod": {
-                    "type": "string"
-                },
-                "userLockStatus": {
-                    "type": "boolean"
-                },
-                "activated": {
-                    "type": "boolean"
-                },
-                "isOtpConfirmed": {
-                    "type": "boolean"
-                },
-                "version": {
-                    "type": "number"
+    "servers": [
+        {
+          "url": "http://localhost:8080/api/v1",
+          "description": "Localhost server"
+        },
+        {
+          "url": "https://recipe-backend.onrender.com/api/v1",
+          "description": "Staging server"
+        }
+      ],
+    "components": {
+        "schemas": {
+            "User": {
+                "type": "object",
+                "properties": {
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "otherNames": {
+                        "type": "string"
+                    },
+                    "msisdn": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "countryCode": {
+                        "type": "string"
+                    },
+                    "isoCode": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "gender": {
+                        "type": "string"
+                    },
+                    "invalidLoginAttemps": {
+                        "type": "number"
+                    },
+                    "lockCoeff": {
+                        "type": "number"
+                    },
+                    "lockPeriod": {
+                        "type": "string"
+                    },
+                    "userLockStatus": {
+                        "type": "boolean"
+                    },
+                    "activated": {
+                        "type": "boolean"
+                    },
+                    "isOtpConfirmed": {
+                        "type": "boolean"
+                    },
+                    "version": {
+                        "type": "number"
+                    }
+                }
+            },
+            "RegisterDTO": {
+                "type": "object",
+                "properties": {
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "otherNames": {
+                        "type": "string"
+                    },
+                    "msisdn": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "confirmPassword": {
+                        "type": "string"
+                    }, 
+                    "countryCode": {
+                        "type": "string"
+                    },
+                    "isoCode": {
+                        "type": "string"
+                    }
+               }
+            },
+            "ConfirmOTPDTO": {
+                "type": "object",
+                "properties": {
+                    "msisdn": {
+                        "type": "string"
+                    },
+                    "code": {
+                        "type": "string"
+                    },
+                    "countryCode": {
+                        "type": "string"
+                    }
+                }
+            },
+            "LoginDTO": {
+                "type": "object",
+                "properties": {
+                    "msisdn": {
+                        "type": "string"
+                    },
+                    "code": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ResendDTO": {
+                "type": "object",
+                "properties": {
+                     "msisdn": {
+                         "type": "string"
+                     },
+                     "countryCode": {
+                         "type": "string"
+                     }
+                }
+            },
+            "Success Response": {
+                "type": "object",
+                "properties": {
+                     "code": {
+                         "type": "string"
+                     },
+                     "msg": {
+                         "type": "string"
+                     },
+                     "data": {
+                         "type": "object"
+                     },
+                     "token": {
+                        "type": "string"
+                    },
+                     "error": {
+                         "type": "object",
+                         "properties": {
+                            "error": {
+                                "type": "boolean"
+                            },
+                            "errMsg": {
+                                "type": "string"
+                            },
+                            "detailedError": {
+                                "type": "object"
+                            }
+                         }
+                     }
+                }
+            },
+            "Error Response": {
+                "type": "object",
+                "properties": {
+                     "code": {
+                         "type": "string"
+                     },
+                     "msg": {
+                         "type": "string"
+                     },
+                     "data": {
+                         "type": "null"
+                     },
+                     "error": {
+                         "type": "object",
+                         "properties": {
+                            "error": {
+                                "type": "boolean"
+                            },
+                            "errMsg": {
+                                "type": "string"
+                            },
+                            "detailedError": {
+                                "type": "object"
+                            }
+                         }
+                     }
                 }
             }
-        },
-        "registerDTO": {
-           "type": "object",
-           "properties": {
-                "firstName": {
-                    "type": "string"
-                },
-                "otherNames": {
-                    "type": "string"
-                },
-                "msisdn": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                },
-                "confirmPassword": {
-                    "type": "string"
-                }, 
-                "countryCode": {
-                    "type": "string"
-                },
-                "isoCode": {
-                    "type": "string"
-                }
-           }
-        },
-        "confirmOTPDTO": {
-            "type": "object",
-            "properties": {
-                 "msisdn": {
-                     "type": "string"
-                 },
-                 "code": {
-                     "type": "string"
-                 },
-                 "countryCode": {
-                     "type": "string"
-                 }
-            }
-         },
-         "loginDTO": {
-            "type": "object",
-            "properties": {
-                 "msisdn": {
-                     "type": "string"
-                 },
-                 "code": {
-                     "type": "string"
-                 },
-                 "password": {
-                     "type": "string"
-                 }
-            }
-         },
-         "resendDTO": {
-            "type": "object",
-            "properties": {
-                 "msisdn": {
-                     "type": "string"
-                 },
-                 "countryCode": {
-                     "type": "string"
-                 }
-            }
-         },
-        "success response": {
-            "type": "object",
-            "properties": {
-                 "code": {
-                     "type": "string"
-                 },
-                 "msg": {
-                     "type": "string"
-                 },
-                 "data": {
-                     "type": "object"
-                 },
-                 "token": {
-                    "type": "string"
-                },
-                 "error": {
-                     "type": "object",
-                     "properties": {
-                        "error": {
-                            "type": "boolean"
-                        },
-                        "errMsg": {
-                            "type": "string"
-                        },
-                        "detailedError": {
-                            "type": "object"
-                        }
-                     }
-                 }
-            }
-         },
-         "error response": {
-            "type": "object",
-            "properties": {
-                 "code": {
-                     "type": "string"
-                 },
-                 "msg": {
-                     "type": "string"
-                 },
-                 "data": {
-                     "type": "null"
-                 },
-                 "error": {
-                     "type": "object",
-                     "properties": {
-                        "error": {
-                            "type": "boolean"
-                        },
-                        "errMsg": {
-                            "type": "string"
-                        },
-                        "detailedError": {
-                            "type": "object"
-                        }
-                     }
-                 }
-            }
-         }
+            
+        }
     },
     "tags": [
         {
@@ -203,34 +211,29 @@
                     "user"
                 ],
                 "summary": "route for users to login into haute cuisine",
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "body",
-                        "description": "the user has to log in using this route",
-                        "schema": {
-                            "$ref": "#/definitions/loginDTO"
-                        }
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "schema":{
-                            "$ref": "#/definitions/success response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema":{
-                            "$ref": "#/definitions/error response"
+                "requestBody": {
+                    "content": {
+                        "application/json":{
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginDTO"
+                            },
+                            "examples": {
+                                "Trial":{
+                                    "value": {
+                                        "msisdn": "0268211334",
+                                        "code": "1234",
+                                        "password": 
+                                    }
+                                }
+                            }
                         }
                     }
                 },
-                "operationId": "loginUser"
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
             }
         },
         "/users/register":{

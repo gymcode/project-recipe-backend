@@ -4,6 +4,8 @@ import Database_Connection from "./services/databaseConfig";
 import { config } from "dotenv";
 import { BASE_URL } from "./shared/constants";
 import SwaggerUi from "swagger-ui-express"
+// import YAML from 'yamljs';
+// const swaggerDocument = YAML.load('./swagger.yaml');
 import SwaggerDocs from "./swagger.json"
 config()
 
