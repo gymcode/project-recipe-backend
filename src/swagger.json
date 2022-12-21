@@ -12,7 +12,11 @@
         },
         {
           "url": "https://recipe-backend.onrender.com/api/v1",
-          "description": "Staging server"
+          "description": "Staging server from render"
+        },
+        {
+          "url": "project-recipe-backend-production.up.railway.app",
+          "description": "Staging server from railway"
         }
       ],
     "components": {
