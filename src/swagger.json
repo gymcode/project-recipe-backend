@@ -15,11 +15,18 @@
           "description": "Staging server from render"
         },
         {
-          "url": "project-recipe-backend-production.up.railway.app/api/v1",
+          "url": "https://project-recipe-backend-production.up.railway.app/api/v1",
           "description": "Staging server from railway"
         }
       ],
     "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        },
         "schemas": {
             "User": {
                 "type": "object",
@@ -355,6 +362,11 @@
         },
         "/users/":{
             "get": {
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
                 "tags": [
                     "user"
                 ],
@@ -434,6 +446,11 @@
             "delete": {
                 "tags": [
                     "user"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
                 ],
                 "summary": "route for users to logout",
                 "responses": {

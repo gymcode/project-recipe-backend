@@ -11,6 +11,7 @@ export async function GenerateAndStoreCode(code: string, user: any){
       code: codeHash,
       expire_at: expiryDate,
     };
+    console.log(`otp storage object to be store in redis ${otpStorageObject}`)
 
     await client.set(storageKey, JSON.stringify(otpStorageObject));
 }

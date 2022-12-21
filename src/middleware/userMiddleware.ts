@@ -11,7 +11,6 @@ export function userValidationMiddleware(schema: Joi.ObjectSchema<any>) {
   return (req: Request, res: Response, next: NextFunction) => {
     try {
       const { error } = schema.validate(req.body);
-      console.log("this is an error", error)
       if (error != undefined)
         return wrapFailureResponse({
           res: res,
@@ -32,7 +31,7 @@ export function userValidationMiddleware(schema: Joi.ObjectSchema<any>) {
   };
 }
 
-export function isUserAuthenticated(client: any) {
+export function isUserAuthenticated() {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       // getting from the headers
@@ -48,6 +47,7 @@ export function isUserAuthenticated(client: any) {
       console.log(token);
 
       const data = verifySignedJwtWebToken(token, SCRETE_KEY);
+      console.log(`here we have the data being logged out and in and there ---- ${data.payload}`)
 
       if (data.payload == null) throw new Error("Un-authorized access")
 

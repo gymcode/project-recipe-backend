@@ -6,7 +6,7 @@ export async function signJwtWebToken(user:any, client: any){
     const accessToken = jwt.sign(
         {_id: user._id}, 
         ACCESS_SCRETE_KEY,
-        {expiresIn: "20s"}
+        {expiresIn: "1d"}
     )
 
     await client.set(accessToken, JSON.stringify({active: true}))
@@ -16,8 +16,10 @@ export async function signJwtWebToken(user:any, client: any){
 export function verifySignedJwtWebToken(token: string, secret: Secret){
     try {
         const payload: any = jwt.verify(token, secret)
+        console.log(`payload coming through ${payload}`)
         return {payload, error: false, expired: false};
     } catch (error:any) {
+        console.log(error)
         return {
             payload: null, 
             error: error.message, 
