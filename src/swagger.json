@@ -67,71 +67,6 @@
                     }
                 }
             },
-            "RegisterDTO": {
-                "type": "object",
-                "properties": {
-                    "firstName": {
-                        "type": "string"
-                    },
-                    "otherNames": {
-                        "type": "string"
-                    },
-                    "msisdn": {
-                        "type": "string"
-                    },
-                    "password": {
-                        "type": "string"
-                    },
-                    "confirmPassword": {
-                        "type": "string"
-                    }, 
-                    "countryCode": {
-                        "type": "string"
-                    },
-                    "isoCode": {
-                        "type": "string"
-                    }
-               }
-            },
-            "ConfirmOTPDTO": {
-                "type": "object",
-                "properties": {
-                    "msisdn": {
-                        "type": "string"
-                    },
-                    "code": {
-                        "type": "string"
-                    },
-                    "countryCode": {
-                        "type": "string"
-                    }
-                }
-            },
-            "LoginDTO": {
-                "type": "object",
-                "properties": {
-                    "msisdn": {
-                        "type": "string"
-                    },
-                    "code": {
-                        "type": "string"
-                    },
-                    "password": {
-                        "type": "string"
-                    }
-                }
-            },
-            "ResendDTO": {
-                "type": "object",
-                "properties": {
-                     "msisdn": {
-                         "type": "string"
-                     },
-                     "countryCode": {
-                         "type": "string"
-                     }
-                }
-            },
             "Success Response": {
                 "type": "object",
                 "properties": {
@@ -215,14 +150,16 @@
                     "content": {
                         "application/json":{
                             "schema": {
-                                "$ref": "#/components/schemas/LoginDTO"
-                            },
-                            "examples": {
-                                "Trial":{
-                                    "value": {
-                                        "msisdn": "0268211334",
-                                        "code": "1234",
-                                        "password": 
+                                "type": "object",
+                                "properties": {
+                                    "msisdn": {
+                                        "type": "string"
+                                    },
+                                    "countryCode": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
                                     }
                                 }
                             }
@@ -231,7 +168,24 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "A success object when the user logs in",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Success Response"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "An error occured",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error Response"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -242,34 +196,60 @@
                     "user"
                 ],
                 "summary": "route for users to sign up onto haute cuisine",
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "body",
-                        "description": "the account we want to create for a user",
-                        "schema": {
-                            "$ref": "#/definitions/registerDTO"
-                        }
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "schema":{
-                            "$ref": "#/definitions/success response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema":{
-                            "$ref": "#/definitions/error response"
+                "requestBody": {
+                    "content": {
+                        "application/json":{
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "firstName": {
+                                        "type": "string"
+                                    },
+                                    "otherNames": {
+                                        "type": "string"
+                                    },
+                                    "msisdn": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "confirmPassword": {
+                                        "type": "string"
+                                    }, 
+                                    "countryCode": {
+                                        "type": "string"
+                                    },
+                                    "isoCode": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
                         }
                     }
                 },
-                "operationId": "addUser"
+                "responses": {
+                    "200": {
+                        "description": "A success object when the user registers",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Success Response"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "An error occured",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error Response"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/users/confirm-otp":{
@@ -278,34 +258,48 @@
                     "user"
                 ],
                 "summary": "route for users to confirm the otp",
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "body",
-                        "description": "the user has to confirm the otp generated and sent",
-                        "schema": {
-                            "$ref": "#/definitions/confirmOTPDTO"
-                        }
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "schema":{
-                            "$ref": "#/definitions/success response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema":{
-                            "$ref": "#/definitions/error response"
+                "requestBody": {
+                    "content": {
+                        "application/json":{
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "msisdn": {
+                                        "type": "string"
+                                    },
+                                    "code": {
+                                        "type": "string"
+                                    },
+                                    "countryCode": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
                         }
                     }
                 },
-                "operationId": "confirmOTP"
+                "responses": {
+                    "200": {
+                        "description": "A success object when the user confirms the otp",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Success Response"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "An error occured",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error Response"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/users/reset":{
@@ -314,34 +308,45 @@
                     "user"
                 ],
                 "summary": "route for users to reset their password",
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "body",
-                        "description": "the user is able to reset their password when necessary",
-                        "schema": {
-                            "$ref": "#/definitions/confirmOTPDTO"
-                        }
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "schema":{
-                            "$ref": "#/definitions/success response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema":{
-                            "$ref": "#/definitions/error response"
+                "requestBody": {
+                    "content": {
+                        "application/json":{
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "msisdn": {
+                                        "type": "string"
+                                    },
+                                    "countryCode": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
                         }
                     }
                 },
-                "operationId": "resetAccount"
+                "responses": {
+                    "200": {
+                        "description": "A success object when the user confirms the otp",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Success Response"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "An error occured",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error Response"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/users/":{
@@ -350,31 +355,28 @@
                     "user"
                 ],
                 "summary": "route to get a user",
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "body",
-                        "description": "the route to get a user"
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
                 "responses": {
                     "200": {
-                        "description": "Ok",
-                        "schema":{
-                            "$ref": "#/definitions/success response"
+                        "description": "A success object when the user confirms the otp",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Success Response"
+                                }
+                            }
                         }
                     },
                     "500": {
-                        "description": "Internal Server Error",
-                        "schema":{
-                            "$ref": "#/definitions/error response"
+                        "description": "An error occured",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error Response"
+                                }
+                            }
                         }
                     }
-                },
-                "operationId": "getUserDetails"
+                }
             }
         },
         "/users/resend":{
@@ -383,34 +385,45 @@
                     "user"
                 ],
                 "summary": "route for users to resend OTP (One Time Password)",
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "body",
-                        "description": "the user has to confirm the otp generated and sent",
-                        "schema": {
-                            "$ref": "#/definitions/resendDTO"
-                        }
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "schema":{
-                            "$ref": "#/definitions/success response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema":{
-                            "$ref": "#/definitions/error response"
+                "requestBody": {
+                    "content": {
+                        "application/json":{
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "msisdn": {
+                                        "type": "string"
+                                    },
+                                    "countryCode": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
                         }
                     }
                 },
-                "operationId": "resendOTP"
+                "responses": {
+                    "200": {
+                        "description": "A success object when the user confirms the otp",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Success Response"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "An error occured",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error Response"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/users/logout":{
@@ -419,31 +432,28 @@
                     "user"
                 ],
                 "summary": "route for users to logout",
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "body",
-                        "description": "the user uses this endpoint to logout"
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
                 "responses": {
                     "200": {
-                        "description": "Ok",
-                        "schema":{
-                            "$ref": "#/definitions/success response"
+                        "description": "A success object when the user confirms the otp",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Success Response"
+                                }
+                            }
                         }
                     },
                     "500": {
-                        "description": "Internal Server Error",
-                        "schema":{
-                            "$ref": "#/definitions/error response"
+                        "description": "An error occured",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error Response"
+                                }
+                            }
                         }
                     }
-                },
-                "operationId": "logout"
+                }
             }
         }
     }
