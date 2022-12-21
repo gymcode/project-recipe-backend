@@ -5,6 +5,7 @@ import { config } from "dotenv";
 import { BASE_URL } from "./shared/constants";
 import SwaggerUi from "swagger-ui-express"
 import SwaggerDocs from "./swagger.json"
+import cors from "cors"
 config()
 
 //routesconfig()
@@ -12,6 +13,8 @@ import userRoutes from "./routes/userRoute";
 
 const port = process.env.PORT || "8080"
 const app: Express = express()
+
+app.use(cors); /* NEW */
 
 app.use(express.json())
 app.use('/haute-cuisine-api-docs', SwaggerUi.serve, SwaggerUi.setup(SwaggerDocs));
