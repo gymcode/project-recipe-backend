@@ -134,14 +134,10 @@ export function confirmOTP() {
 
             if (resp == null) throw new Error(REQUEST_NOT_PERFORMED)
 
-            // expires in one day
-            const token = await signJwtWebToken(user, client);
-
             wrapSuccessResponse({
                 res: res,
                 statusCode: 200,
-                data: resp.value,
-                token: token
+                data: resp.value
             });
 
         } catch (error: any) {
