@@ -570,6 +570,111 @@
                     }
                 }
             }
+        },
+        "/bookmarks/user": {
+            "get":{
+                "tags": [
+                    "bookmark"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "summary": "route for users to get bookmarks for a user",
+                "responses": {
+                    "200": {
+                        "description": "A success object when the user logs in",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Success Response"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "An error occured",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error Response"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/bookmarks/{bookmarkID}": {
+            "delete":{
+                "tags": [
+                    "bookmark"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "summary": "route for users to delete a bookmark",
+                "responses": {
+                    "200": {
+                        "description": "A success object when the user logs in",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Success Response"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "An error occured",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error Response"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/bookmarks/delete/user": {
+            "delete":{
+                "tags": [
+                    "bookmark"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "summary": "route for users to delete bookmarks for a user",
+                "responses": {
+                    "200": {
+                        "description": "A success object when the user logs in",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Success Response"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "An error occured",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error Response"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

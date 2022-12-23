@@ -9,7 +9,7 @@ import {addBookmark, deleteBookmark, deleteBookmarks, getBookmarksPerUser} from 
 // route to register a new user 
 router.post('/create', isUserAuthenticated(), addBookmark())
 
-router.put("/user", isUserAuthenticated() ,getBookmarksPerUser())
+router.get("/user", isUserAuthenticated() ,getBookmarksPerUser())
 
 router.delete("/delete/:bookmarkID",isUserAuthenticated(), deleteBookmark())
 
