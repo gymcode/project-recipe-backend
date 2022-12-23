@@ -12,6 +12,6 @@ const bookmarkSchema = new Schema<IBookmark>({
     version: {type: Number, default: 1}
 }, {timestamps: true})
 
-const model = mongoose.model<IBookmark>("users", bookmarkSchema)
+const model = mongoose.model<IBookmark>("bookmarks", bookmarkSchema)
 
 export default model

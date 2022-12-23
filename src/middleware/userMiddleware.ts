@@ -44,7 +44,6 @@ export function isUserAuthenticated() {
         throw new Error("Authorization header must start with /Bearer /");
 
       const token = authHeader.split(" ")[1];
-      console.log(token);
 
       const data = verifySignedJwtWebToken(token, SCRETE_KEY);
       console.log(`here we have the data being logged out and in and there ---- ${data.payload}`)

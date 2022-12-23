@@ -13,7 +13,7 @@ router.get("/user", isUserAuthenticated() ,getBookmarksPerUser())
 
 router.delete("/delete/:bookmarkID",isUserAuthenticated(), deleteBookmark())
 
-router.delete("/delete/user", isUserAuthenticated(), deleteBookmarks())
+router.delete("/delete/user/all", isUserAuthenticated(), deleteBookmarks())
 
 
 

@@ -19,9 +19,9 @@ export function addBookmark() {
                 });
 
             const request: AddBookmarkDTO = req.body
-
+            console.log(request)
             // check if user has already bookmarked a recipe
-            const bookmark = Bookmark.find({recipeID: request.recipeID}).exec()
+            const bookmark = await Bookmark.findOne({recipeID: request.recipeID}).exec()
             if (bookmark != null) throw new Error ("User has already bookmarked this post")
 
             const bookmarkModel = new Bookmark({
@@ -30,7 +30,7 @@ export function addBookmark() {
                 recipeName: request.recipeName,
                 recipeSummary: request.recipeSummary,
                 timeToPrepare: request.timeToPrepare,
-                recipe: request.recipeID
+                recipeID: request.recipeID
             })
             
             // saving the bookmark for a user 
@@ -73,7 +73,7 @@ export function getBookmarksPerUser() {
                 });
 
             // check if user has already bookmarked a recipe
-            const bookmarks = Bookmark.find({userID: user._id}).exec()
+            const bookmarks = await Bookmark.find({userID: user._id}).exec()
             if (bookmarks == null) throw new Error ("Sorry you have not bookmark any recipe yet.")
 
             wrapSuccessResponse({
@@ -112,7 +112,7 @@ export function deleteBookmark() {
 
             const bookmarkID = req.params.bookmarkID
             // check if user has already bookmarked a recipe
-            const isBookmarkDeleted = Bookmark.deleteOne({_id: bookmarkID}).exec()
+            const isBookmarkDeleted = await Bookmark.deleteOne({_id: bookmarkID}).exec()
             if (isBookmarkDeleted == null) throw new Error ("Could not execute request.")
 
             wrapSuccessResponse({
@@ -140,7 +140,9 @@ register a new user
 export function deleteBookmarks() {
     return async (req: Request, res: Response) => {
         try {
+            console.log("chale what is up")
             const { user, token } = res.locals.user_info;
+            console.log(`nody ${user._id}`)
             if (user == null)
                 return wrapFailureResponse({
                     res: res,
@@ -148,8 +150,9 @@ export function deleteBookmarks() {
                     statusCode: 422,
                 });
 
+            console.log(`nody ${user._id}`)
             // check if user has already bookmarked a recipe
-            const isBookmarkDeleted = Bookmark.deleteMany({userID: user._id}).exec()
+            const isBookmarkDeleted = await Bookmark.deleteMany({userID: user._id}).exec()
             if (isBookmarkDeleted == null) throw new Error ("Could not execute request.")
 
             wrapSuccessResponse({

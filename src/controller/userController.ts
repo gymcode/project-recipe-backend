@@ -290,11 +290,11 @@ export function userLogin() {
             console.log(user);
             if (user == null) throw new Error(ACCOUNT_DOESNOT_EXIST)
 
-            const pinConfirmationStatus = bcrypt.compareSync(
-                request.pin,
+            const passwordConfirmationStatus = bcrypt.compareSync(
+                request.password,
                 user.password
             );
-            if (!pinConfirmationStatus) {
+            if (!passwordConfirmationStatus) {
                 throw new Error("Wrong password or username")
             } else {
                 // success
