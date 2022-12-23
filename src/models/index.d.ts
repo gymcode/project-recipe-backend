@@ -17,3 +17,13 @@ export interface IUser extends mongoose.Document{
     isOtpConfirmed: boolean,
     version: number,
 }
+
+export interface IBookmark extends mongoose.Document {
+    userID: string,
+    image: string,
+    recipeName: string,
+    recipeSummary: string,
+    timeToPrepare: number,
+    recipeID: string,
+    version: number
+}
