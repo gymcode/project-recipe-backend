@@ -78,6 +78,32 @@
                     }
                 }
             },
+            "Bookmark": {
+                "type": "object",
+                "properties": {
+                    "userID": {
+                        "type": "string"
+                    },
+                    "image": {
+                        "type": "string"
+                    },
+                    "recipeName": {
+                        "type": "string"
+                    },
+                    "recipeSummary": {
+                        "type": "string"
+                    },
+                    "timeToPrepare": {
+                        "type": "number"
+                    },
+                    "recipeID": {
+                        "type": "string"
+                    },
+                    "version": {
+                        "type": "string"
+                    }
+                }
+            },
             "Success Response": {
                 "type": "object",
                 "properties": {
@@ -123,7 +149,7 @@
                      },
                      "error": {
                          "type": "object",
-                         "properties": {
+                         "properti:es": {
                             "error": {
                                 "type": "boolean"
                             },
@@ -144,6 +170,10 @@
         {
             "name": "user",
             "description": "This contains all functionalities for user"
+        },
+        {
+            "name": "bookmark",
+            "description": "This helps manage bookmarks for each user"
         },
         {
             "name": "recipe",
@@ -456,6 +486,70 @@
                 "responses": {
                     "200": {
                         "description": "A success object when the user confirms the otp",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Success Response"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "An error occured",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error Response"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/bookmarks/create": {
+            "post":{
+                "tags": [
+                    "bookmark"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "summary": "route for users to create bookmarks",
+                "requestBody": {
+                    "content": {
+                        "application/json":{
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "userID": {
+                                        "type": "string"
+                                    },
+                                    "image": {
+                                        "type": "string"
+                                    },
+                                    "recipeName": {
+                                        "type": "string"
+                                    },
+                                    "recipeSummary": {
+                                        "type": "string"
+                                    },
+                                    "timeToPrepare": {
+                                        "type": "string"
+                                    },
+                                    "recipeID": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "A success object when the user logs in",
                         "content": {
                             "application/json": {
                                 "schema": {

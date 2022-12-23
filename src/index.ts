@@ -10,6 +10,7 @@ config()
 
 //routesconfig()
 import userRoutes from "./routes/userRoute";
+import bookmarkRoutes from "./routes/bookmarkRoute"
 
 const port = process.env.PORT || "8080"
 const app: Express = express()
@@ -21,6 +22,7 @@ app.use('/haute-cuisine-api-docs', SwaggerUi.serve, SwaggerUi.setup(SwaggerDocs)
 
 // all user routes
 app.use(`${BASE_URL}/users`, userRoutes)
+app.use(`${BASE_URL}/bookmarks`, bookmarkRoutes)
 
 Database_Connection().then(()=>{
     app.listen(port, () => {

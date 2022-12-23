@@ -95,3 +95,80 @@ export function getBookmarksPerUser() {
     };
 }
 
+
+/*
+register a new user 
+*/
+export function deleteBookmark() {
+    return async (req: Request, res: Response) => {
+        try {
+            const { user, token } = res.locals.user_info;
+            if (user == null)
+                return wrapFailureResponse({
+                    res: res,
+                    errorMsg: "User not found",
+                    statusCode: 422,
+                });
+
+            const bookmarkID = req.params.bookmarkID
+            // check if user has already bookmarked a recipe
+            const isBookmarkDeleted = Bookmark.deleteOne({_id: bookmarkID}).exec()
+            if (isBookmarkDeleted == null) throw new Error ("Could not execute request.")
+
+            wrapSuccessResponse({
+                res: res,
+                statusCode: 200,
+                data: true,
+                token: token
+            });
+
+        } catch (error: any) {
+            console.log(error);
+            return wrapFailureResponse({
+                res: res,
+                errorMsg: `An Error occured:${error.message}`,
+                statusCode: 500,
+                detailedError: error,
+            });
+        }
+    };
+}
+
+/*
+register a new user 
+*/
+export function deleteBookmarks() {
+    return async (req: Request, res: Response) => {
+        try {
+            const { user, token } = res.locals.user_info;
+            if (user == null)
+                return wrapFailureResponse({
+                    res: res,
+                    errorMsg: "User not found",
+                    statusCode: 422,
+                });
+
+            // check if user has already bookmarked a recipe
+            const isBookmarkDeleted = Bookmark.deleteMany({userID: user._id}).exec()
+            if (isBookmarkDeleted == null) throw new Error ("Could not execute request.")
+
+            wrapSuccessResponse({
+                res: res,
+                statusCode: 200,
+                data: true,
+                token: token
+            });
+
+        } catch (error: any) {
+            console.log(error);
+            return wrapFailureResponse({
+                res: res,
+                errorMsg: `An Error occured:${error.message}`,
+                statusCode: 500,
+                detailedError: error,
+            });
+        }
+    };
+}
+
+
