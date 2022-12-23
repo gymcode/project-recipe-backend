@@ -537,7 +537,7 @@
                                         "type": "string"
                                     },
                                     "timeToPrepare": {
-                                        "type": "string"
+                                        "type": "number"
                                     },
                                     "recipeID": {
                                         "type": "string"
@@ -606,7 +606,7 @@
                 }
             }
         },
-        "/bookmarks/{bookmarkID}": {
+        "/bookmarks/delete/{bookmarkID}": {
             "delete":{
                 "tags": [
                     "bookmark"
@@ -617,6 +617,16 @@
                     }
                 ],
                 "summary": "route for users to delete a bookmark",
+                "parameters": [
+                    {
+                        "name": "bookmarkID",
+                        "in": "path",
+                        "description": "id of the bookmark",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "A success object when the user logs in",
@@ -641,7 +651,7 @@
                 }
             }
         },
-        "/bookmarks/delete/user": {
+        "/bookmarks/delete/user/all": {
             "delete":{
                 "tags": [
                     "bookmark"
