@@ -1,20 +1,24 @@
 import * as redis from "redis";
 
+// adding logger class
+import { Logger } from "../logger";
+const logger = new Logger()
+
 function instanceEventListeners(conn: any) {
   conn.on("connect", () => {
-    console.log("CacheStore - Connection status: connected");
+    logger.info("CacheStore - Connection status: connected");
   });
 
   conn.on("end", () => {
-    console.log("CacheStore - Connection status: disconnected");
+    logger.warning("CacheStore - Connection status: disconnected");
   });
 
   conn.on("reconnecting", () => {
-    console.log("CacheStore - Connection status: reconnecting");
+    logger.warning("CacheStore - Connection status: reconnecting");
   });
 
   conn.on("error", (err: any) => {
-    console.log("CacheStore - Connection status: error ", { err });
+    logger.error(`CacheStore - Connection status: error ${err}`);
   });
 }
 

@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 import { config } from "dotenv";
 
+// adding logger class
+import { Logger } from "../logger";
+const logger = new Logger()
+
+
 async function Database_Connection() {
   config();
   try {
@@ -16,16 +21,16 @@ async function Database_Connection() {
     const conn = mongoose.connect(uri, options);
     conn
       .then(() => {
-        console.log(`You have successfully established a database connection`);
+        logger.info(`You have successfully established a database connection`);
       })
       .catch((err: any) => {
-        console.error(
+        logger.error(
           `An Error occured trying to establish a database connection:: Error=> ${err}`
         );
         process
       });
   } catch (error) {
-    console.error(
+    logger.error(
       `An Error occured trying to a database connection:: Error=> ${error}`
     );
     process.exitCode = 1

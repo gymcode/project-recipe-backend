@@ -24,6 +24,9 @@ import { signJwtWebToken } from "../security/jwtSecurity";
 import { GenerateAndStoreCode } from "../utils/generateAndHashCode";
 import { CodeHash } from "../security/passwordSecurity";
 
+import { Logger } from "../logger";
+const logger = new Logger()
+
 /*
 register a new user 
 */
@@ -60,7 +63,7 @@ export function userRegistration() {
 
             // generate code  hash code
             const code = GenerateOTP();
-            console.log(code);
+            logger.info(code);
             await GenerateAndStoreCode(`${code}`, user)
 
             // TODO(send SMS to user with the otp)
@@ -72,7 +75,7 @@ export function userRegistration() {
             });
 
         } catch (error: any) {
-            console.log(error);
+            logger.error(error);
             return wrapFailureResponse({
                 res: res,
                 errorMsg: `An Error occured:${error.message}`,
@@ -108,7 +111,7 @@ export function confirmOTP() {
             const storageKey = `${user._id}_OTP`;
             const value = await client.get(storageKey);
             const data = JSON.parse(value!);
-            console.log(value)
+            logger.info(value)
             // checking for the expire by comparison
             const currentDateTime = new Date();
             if (currentDateTime > new Date(data.expire_at))
@@ -141,7 +144,7 @@ export function confirmOTP() {
             });
 
         } catch (error: any) {
-            console.log(error);
+            logger.error(error);
             return wrapFailureResponse({
                 res: res,
                 errorMsg: `An Error occured:${error.message}`,
@@ -174,7 +177,7 @@ export function resendOTP() {
 
             // generating the otp
             const code = generateOtp();
-            console.log(code);
+            logger.info(code);
             await GenerateAndStoreCode(`${code}`, user)
 
 
@@ -187,7 +190,7 @@ export function resendOTP() {
                 data: user,
             });
         } catch (error: any) {
-            console.log(error);
+            logger.error(error);
             return wrapFailureResponse({
                 res: res,
                 errorMsg: `An Error occured:${error.message}`,
@@ -206,7 +209,8 @@ export function resetPassword() {
         try {
             // validating the msisdn based on the country code
             const request = req.body;
-            console.log(request);
+            logger.info(request);
+
             const response = CountryMsisdnValidation(
                 request.msisdn,
                 request.countryCode
@@ -222,7 +226,7 @@ export function resetPassword() {
 
             // generate code  hash code
             const code = GenerateOTP();
-            console.log(code);
+            logger.info(code);
             await GenerateAndStoreCode(`${code}`, user)
 
             // update user details
@@ -240,7 +244,7 @@ export function resetPassword() {
                     rawResult: true, // Return the raw result from the MongoDB driver
                 }
             );
-            // console.log(resp)
+
             if (resp.ok != 1)
                 return wrapFailureResponse({
                     res: res,
@@ -257,7 +261,7 @@ export function resetPassword() {
                 data: user,
             });
         } catch (error: any) {
-            console.log(error);
+            logger.error(error);
             return wrapFailureResponse({
                 res: res,
                 errorMsg: `An Error occured:${error.message}`,
@@ -287,7 +291,7 @@ export function userLogin() {
 
             // getting the user details based on the msisdn
             const user = await User.findOne({ msisdn: msisdn }).exec();
-            console.log(user);
+            logger.info(user);
             if (user == null) throw new Error(ACCOUNT_DOESNOT_EXIST)
 
             const passwordConfirmationStatus = bcrypt.compareSync(
@@ -308,7 +312,7 @@ export function userLogin() {
             }
 
         } catch (error: any) {
-            console.log(error);
+            logger.error(error);
             return wrapFailureResponse({
                 res: res,
                 errorMsg: `An Error occured:${error.message}`,
@@ -337,7 +341,7 @@ export function getUser() {
             });
 
         } catch (error: any) {
-            console.log(error);
+            logger.error(error);
             return wrapFailureResponse({
                 res: res,
                 errorMsg: `An Error occured:${error.message}`,
@@ -375,7 +379,7 @@ export function logOut() {
                 statusCode: 200,
             });
         } catch (error: any) {
-            console.log(error);
+            logger.error(error);
             return wrapFailureResponse({
                 res: res,
                 errorMsg: `An Error occured:${error.message}`,

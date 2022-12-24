@@ -4,6 +4,10 @@ import Bookmark from "../models/Bookmark";
 import _ from "lodash";
 import { wrapFailureResponse, wrapSuccessResponse } from "../shared/response";
 
+// adding logger class
+import { Logger } from "../logger";
+const logger = new Logger()
+
 /*
 register a new user 
 */
@@ -19,7 +23,6 @@ export function addBookmark() {
                 });
 
             const request: AddBookmarkDTO = req.body
-            console.log(request)
             // check if user has already bookmarked a recipe
             const bookmark = await Bookmark.findOne({recipeID: request.recipeID}).exec()
             if (bookmark != null) throw new Error ("User has already bookmarked this post")
@@ -46,7 +49,7 @@ export function addBookmark() {
             });
 
         } catch (error: any) {
-            console.log(error);
+            logger.error(error)
             return wrapFailureResponse({
                 res: res,
                 errorMsg: `An Error occured:${error.message}`,
@@ -84,7 +87,7 @@ export function getBookmarksPerUser() {
             });
 
         } catch (error: any) {
-            console.log(error);
+            logger.error(error)
             return wrapFailureResponse({
                 res: res,
                 errorMsg: `An Error occured:${error.message}`,
@@ -123,7 +126,7 @@ export function deleteBookmark() {
             });
 
         } catch (error: any) {
-            console.log(error);
+            logger.error(error)
             return wrapFailureResponse({
                 res: res,
                 errorMsg: `An Error occured:${error.message}`,
@@ -140,9 +143,7 @@ register a new user
 export function deleteBookmarks() {
     return async (req: Request, res: Response) => {
         try {
-            console.log("chale what is up")
             const { user, token } = res.locals.user_info;
-            console.log(`nody ${user._id}`)
             if (user == null)
                 return wrapFailureResponse({
                     res: res,
@@ -150,7 +151,6 @@ export function deleteBookmarks() {
                     statusCode: 422,
                 });
 
-            console.log(`nody ${user._id}`)
             // check if user has already bookmarked a recipe
             const isBookmarkDeleted = await Bookmark.deleteMany({userID: user._id}).exec()
             if (isBookmarkDeleted == null) throw new Error ("Could not execute request.")
@@ -163,7 +163,7 @@ export function deleteBookmarks() {
             });
 
         } catch (error: any) {
-            console.log(error);
+            logger.error(error)
             return wrapFailureResponse({
                 res: res,
                 errorMsg: `An Error occured:${error.message}`,

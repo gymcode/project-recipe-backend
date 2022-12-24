@@ -12,6 +12,10 @@ config()
 import userRoutes from "./routes/userRoute";
 import bookmarkRoutes from "./routes/bookmarkRoute"
 
+// adding logger class
+import { Logger } from "./logger";
+const logger = new Logger()
+
 const port = process.env.PORT || "8080"
 const app: Express = express()
 
@@ -26,7 +30,6 @@ app.use(`${BASE_URL}/bookmarks`, bookmarkRoutes)
 
 Database_Connection().then(()=>{
     app.listen(port, () => {
-        // establish the database connection 
-        console.log(`Example app listening on port ${port}`)
+        logger.info(`Application listening on port ${port} : url http://localhost:${port}`)
     })    
 })

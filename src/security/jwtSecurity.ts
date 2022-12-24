@@ -1,5 +1,8 @@
 import jwt, {Secret} from 'jsonwebtoken'
 
+import { Logger } from '../logger'
+const logger = new Logger()
+
 const ACCESS_SCRETE_KEY: Secret = String(process.env.ACCESS_TOKEN_SECRET)
 
 export async function signJwtWebToken(user:any, client: any){
@@ -16,10 +19,11 @@ export async function signJwtWebToken(user:any, client: any){
 export function verifySignedJwtWebToken(token: string, secret: Secret){
     try {
         const payload: any = jwt.verify(token, secret)
-        console.log(`payload coming through ${payload}`)
+
         return {payload, error: false, expired: false};
     } catch (error:any) {
-        console.log(error)
+        
+        logger.error(error)
         return {
             payload: null, 
             error: error.message, 

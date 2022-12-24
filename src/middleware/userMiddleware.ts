@@ -5,6 +5,10 @@ import { Secret } from "jsonwebtoken";
 import User from "../models/User"
 import Joi from "joi";
 
+// adding logger class
+import { Logger } from "../logger";
+const logger = new Logger()
+
 const SCRETE_KEY: Secret = String(process.env.ACCESS_TOKEN_SECRET);
 
 export function userValidationMiddleware(schema: Joi.ObjectSchema<any>) {
@@ -20,7 +24,8 @@ export function userValidationMiddleware(schema: Joi.ObjectSchema<any>) {
         });
       return next();
     } catch (error: any) {
-      console.error(error);
+
+      logger.error(error);
       return wrapFailureResponse({
         res: res,
         errorMsg: `An Error occured:${error.message}`,
@@ -46,7 +51,6 @@ export function isUserAuthenticated() {
       const token = authHeader.split(" ")[1];
 
       const data = verifySignedJwtWebToken(token, SCRETE_KEY);
-      console.log(`here we have the data being logged out and in and there ---- ${data.payload}`)
 
       if (data.payload == null) throw new Error("Un-authorized access")
 
@@ -56,8 +60,10 @@ export function isUserAuthenticated() {
       res.locals.user_info = user_info        
 
       return next();
+
     } catch (error: any) {
-      console.error(error);
+
+      logger.error(error);
       return wrapFailureResponse({
         res: res,
         errorMsg: `An Error occured:${error.message}`,
