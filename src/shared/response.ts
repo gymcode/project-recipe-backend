@@ -1,9 +1,10 @@
 import { CODE_FAILURE, CODE_SUCCESS } from "./constants"
 import {IErrorResponse, ISuccessResponse} from "./index"
 
-export function wrapFailureResponse({res, errorMsg, detailedError, statusCode}: IErrorResponse){
+export function wrapFailureResponse({res, errorMsg, detailedError, statusCode, systemCode="U01"}: IErrorResponse){
     res.status(statusCode).json({
         code: CODE_FAILURE,
+        systemCode: statusCode,
         msg: "failure",
         data: null,
         error: {
@@ -14,9 +15,10 @@ export function wrapFailureResponse({res, errorMsg, detailedError, statusCode}: 
     })
 }
 
-export function wrapSuccessResponse({res, statusCode, data, token, msg = "success"}: ISuccessResponse){
+export function wrapSuccessResponse({res, statusCode, data, token, msg = "success", systemCode="U00"}: ISuccessResponse){
     res.status(statusCode).json({
         code: CODE_SUCCESS,
+        systemCode: systemCode,
         msg: msg,
         data: data,
         token: token,

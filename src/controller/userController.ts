@@ -47,7 +47,18 @@ export function userRegistration() {
 
             // checking in the database if the user already exists
             let user = await User.findOne({ msisdn: msisdn }).exec();
-            if (user != null) throw new Error(USER_EXISTS);
+            if (user != null && user.isOtpConfirmed) {
+                if (user.isOtpConfirmed) 
+                    return wrapFailureResponse({
+                        res: res,
+                        systemCode: "U02",
+                        errorMsg: USER_EXISTS,
+                        statusCode: 500,
+                        detailedError: error,
+                    });
+
+                throw new Error(USER_EXISTS);
+            }
 
             // add user
             const userInput = new User({
@@ -78,7 +89,7 @@ export function userRegistration() {
             logger.error(error);
             return wrapFailureResponse({
                 res: res,
-                errorMsg: `An Error occured:${error.message}`,
+                errorMsg: error.message,
                 statusCode: 500,
                 detailedError: error,
             });
@@ -147,7 +158,7 @@ export function confirmOTP() {
             logger.error(error);
             return wrapFailureResponse({
                 res: res,
-                errorMsg: `An Error occured:${error.message}`,
+                errorMsg: error.message,
                 statusCode: 500,
                 detailedError: error,
             });
@@ -193,7 +204,7 @@ export function resendOTP() {
             logger.error(error);
             return wrapFailureResponse({
                 res: res,
-                errorMsg: `An Error occured:${error.message}`,
+                errorMsg: error.message,
                 statusCode: 500,
                 detailedError: error,
             });
@@ -264,7 +275,7 @@ export function resetPassword() {
             logger.error(error);
             return wrapFailureResponse({
                 res: res,
-                errorMsg: `An Error occured:${error.message}`,
+                errorMsg: error.message,
                 statusCode: 500,
                 detailedError: error,
             });
@@ -315,7 +326,7 @@ export function userLogin() {
             logger.error(error);
             return wrapFailureResponse({
                 res: res,
-                errorMsg: `An Error occured:${error.message}`,
+                errorMsg: error.message,
                 statusCode: 500,
                 detailedError: error,
             });
@@ -344,7 +355,7 @@ export function getUser() {
             logger.error(error);
             return wrapFailureResponse({
                 res: res,
-                errorMsg: `An Error occured:${error.message}`,
+                errorMsg: error.message,
                 statusCode: 500,
                 detailedError: error,
             });
@@ -382,7 +393,7 @@ export function logOut() {
             logger.error(error);
             return wrapFailureResponse({
                 res: res,
-                errorMsg: `An Error occured:${error.message}`,
+                errorMsg: error.message,
                 statusCode: 500,
                 detailedError: error,
             });

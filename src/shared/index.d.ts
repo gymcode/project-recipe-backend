@@ -5,6 +5,7 @@ export interface IErrorResponse {
     statusCode: number, 
     errorMsg:string, 
     detailedError?: any
+    systemCode?:string
 }
 
 export interface ISuccessResponse {
@@ -12,5 +13,6 @@ export interface ISuccessResponse {
     statusCode: number, 
     msg?: string,
     data?: any, 
-    token?:string
+    token?:string,
+    systemCode?:string
 }
