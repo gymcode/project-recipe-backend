@@ -47,8 +47,8 @@ export function userRegistration() {
 
             // checking in the database if the user already exists
             let user = await User.findOne({ msisdn: msisdn }).exec();
-            if (user != null && user.isOtpConfirmed) {
-                if (user.isOtpConfirmed) 
+            if (user != null) {
+                if (!user.isOtpConfirmed) 
                     return wrapFailureResponse({
                         res: res,
                         systemCode: "U02",

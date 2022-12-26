@@ -15,7 +15,7 @@ router.post('/register', userValidationMiddleware(RegistrationSchema), userRegis
 
 router.put("/confirm-otp", confirmOTP())
 
-router.get("/resend", resendOTP())
+router.put("/resend", resendOTP())
 
 router.put("/reset", resetPassword())
 

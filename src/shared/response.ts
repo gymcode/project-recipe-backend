@@ -4,7 +4,7 @@ import {IErrorResponse, ISuccessResponse} from "./index"
 export function wrapFailureResponse({res, errorMsg, detailedError, statusCode, systemCode="U01"}: IErrorResponse){
     res.status(statusCode).json({
         code: CODE_FAILURE,
-        systemCode: statusCode,
+        systemCode: systemCode,
         msg: "failure",
         data: null,
         error: {
