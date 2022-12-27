@@ -426,7 +426,7 @@
             }
         },
         "/users/resend":{
-            "get": {
+            "put": {
                 "tags": [
                     "user"
                 ],
