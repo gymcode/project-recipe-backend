@@ -26,6 +26,5 @@ router.get("/", isUserAuthenticated(), getUser())
 router.delete("/logout",isUserAuthenticated(), logOut())
 
 
-
 export default router
 

@@ -9,7 +9,7 @@ import { Logger } from "../logger";
 const logger = new Logger()
 
 /*
-register a new user 
+Create a bookmark
 */
 export function addBookmark() {
     return async (req: Request, res: Response) => {
@@ -62,7 +62,7 @@ export function addBookmark() {
 
 
 /*
-register a new user 
+get a bookmark per user
 */
 export function getBookmarksPerUser() {
     return async (req: Request, res: Response) => {
@@ -100,7 +100,7 @@ export function getBookmarksPerUser() {
 
 
 /*
-register a new user 
+delete a bookmark
 */
 export function deleteBookmark() {
     return async (req: Request, res: Response) => {
@@ -138,7 +138,7 @@ export function deleteBookmark() {
 }
 
 /*
-register a new user 
+delete all 
 */
 export function deleteBookmarks() {
     return async (req: Request, res: Response) => {
