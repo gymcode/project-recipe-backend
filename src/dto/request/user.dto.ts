@@ -5,7 +5,8 @@ export interface RegisterDTO {
     otherNames: string,
     password: string,
     confirmPassword: string,
-    isoCode: string
+    isoCode: string,
+    isEmailVerification: boolean
 }
 
 export interface LoginDTO {

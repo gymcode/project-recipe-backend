@@ -72,6 +72,9 @@ export function userRegistration() {
             user = await userInput.save();
             if (user == null) throw new Error(REQUEST_NOT_PERFORMED);
 
+            // check is the request requires an email verification 
+
+
             // generate code  hash code
             const code = GenerateOTP();
             logger.info(code);
@@ -96,6 +99,9 @@ export function userRegistration() {
         }
     };
 }
+
+
+// email verification
 
 /*
 it should confirm otp
