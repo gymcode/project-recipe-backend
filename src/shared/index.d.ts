@@ -13,6 +13,11 @@ export interface ISuccessResponse {
     statusCode: number, 
     msg?: string,
     data?: any, 
-    token?:string,
+    token?: Token,
     systemCode?:string
+}
+
+export interface Token {
+    accessToken: string,
+    refreshToken: string
 }

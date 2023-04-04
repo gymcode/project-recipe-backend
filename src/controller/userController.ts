@@ -20,12 +20,17 @@ import {
 import User from "../models/User";
 import generateOtp from "../utils/generateOtp";
 import _ from "lodash";
-import { signJwtWebToken } from "../security/jwtSecurity";
+import { signAccessJwtToken, signRefreshJwtToken } from "../security/jwtSecurity";
 import { GenerateAndStoreCode } from "../utils/generateAndHashCode";
 import { CodeHash } from "../security/passwordSecurity";
 
 import { Logger } from "../logger";
 const logger = new Logger()
+
+
+// access and fresh token stuff
+// generate both access and refresh token when the user logs in 
+// when the access token expires, use the refresh token to generate a new access token and expire the refresh token 
 
 /*
 register a new user 
@@ -319,7 +324,13 @@ export function userLogin() {
                 throw new Error("Wrong password or username")
             } else {
                 // success
-                const token = await signJwtWebToken(user, client);
+                const accessToken = await signAccessJwtToken(user, client);
+                const refreshToken = await signRefreshJwtToken(user)
+
+                const token = {
+                    accessToken: accessToken,
+                    refreshToken: refreshToken
+                }
                 wrapSuccessResponse({
                     res: res,
                     statusCode: 200,
