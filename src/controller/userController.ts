@@ -20,13 +20,15 @@ import {
 import User from "../models/User";
 import generateOtp from "../utils/generateOtp";
 import _ from "lodash";
-import { signAccessJwtToken, signRefreshJwtToken } from "../security/jwtSecurity";
+import { signAccessJwtToken, signRefreshJwtToken, verifySignedJwtWebToken } from "../security/jwtSecurity";
 import { GenerateAndStoreCode } from "../utils/generateAndHashCode";
 import { CodeHash } from "../security/passwordSecurity";
 
 import { Logger } from "../logger";
+import { Secret } from "jsonwebtoken";
 const logger = new Logger()
 
+const SCRETE_KEY: Secret = String(process.env.REFRESH_TOKEN_SECRET);
 
 // access and fresh token stuff
 // generate both access and refresh token when the user logs in 
@@ -78,7 +80,6 @@ export function userRegistration() {
             if (user == null) throw new Error(REQUEST_NOT_PERFORMED);
 
             // check is the request requires an email verification 
-
 
             // generate code  hash code
             const code = GenerateOTP();
@@ -416,5 +417,44 @@ export function logOut() {
             });
         }
     };
+}
+
+export function generateRefreshToken(){
+    return async(req: Request, res: Response) =>{
+        try {
+            // get the refresh token from the payload
+        const request = req.body
+        
+        // verify the sign refresh token 
+        const verifiedRefreshToken = verifySignedJwtWebToken(request.refreshToken, SCRETE_KEY)
+
+        if (verifiedRefreshToken.payload == null) 
+            throw new Error(verifiedRefreshToken.expired)
+
+        // generate a new access token using the refresh token 
+        const userId = verifiedRefreshToken.payload.id
+        const accessToken = await signAccessJwtToken(userId, client)
+        const refreshToken = await signRefreshJwtToken(userId)
+
+        const token = {
+            accessToken: accessToken,
+            refreshToken: refreshToken
+        }
+
+        wrapSuccessResponse({
+            res: res,
+            token: token,
+            statusCode: 200,
+        });
+        } catch (error: any) {
+            logger.error(error);
+            return wrapFailureResponse({
+                res: res,
+                errorMsg: error.message,
+                statusCode: 500,
+                detailedError: error,
+            });
+        }
+    }
 }
 

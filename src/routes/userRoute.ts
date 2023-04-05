@@ -1,30 +1,45 @@
-import express from "express"
-const router = express.Router()
-import client from "../config/redis"
+import express from "express";
+const router = express.Router();
 
-// schemas 
-import { RegistrationSchema } from "../utils/joiValidation"
+// schemas
+import { RegistrationSchema } from "../utils/joiValidation";
 
-// middlewares 
-import { userValidationMiddleware, isUserAuthenticated } from "../middleware/userMiddleware"
+// middlewares
+import {
+  userValidationMiddleware,
+  isUserAuthenticated,
+} from "../middleware/userMiddleware";
 
-import {userRegistration, userLogin, getUser, confirmOTP, resendOTP, resetPassword, logOut} from "../controller/userController"
+import {
+  userRegistration,
+  userLogin,
+  getUser,
+  confirmOTP,
+  resendOTP,
+  resetPassword,
+  logOut,
+  generateRefreshToken
+} from "../controller/userController";
 
-// route to register a new user 
-router.post('/register', userValidationMiddleware(RegistrationSchema), userRegistration())
+// route to register a new user
+router.post(
+  "/register",
+  userValidationMiddleware(RegistrationSchema),
+  userRegistration()
+);
 
-router.put("/confirm-otp", confirmOTP())
+router.put("/confirm-otp", confirmOTP());
 
-router.put("/resend", resendOTP())
+router.put("/resend", resendOTP());
 
-router.put("/reset", resetPassword())
+router.put("/reset", resetPassword());
 
-router.post('/login', userLogin())
+router.post("/login", userLogin());
 
-router.get("/", isUserAuthenticated(), getUser())
+router.post("/refresh-token", generateRefreshToken());
 
-router.delete("/logout",isUserAuthenticated(), logOut())
+router.get("/", isUserAuthenticated(), getUser());
 
+router.delete("/logout", isUserAuthenticated(), logOut());
 
-export default router
-
+export default router;
