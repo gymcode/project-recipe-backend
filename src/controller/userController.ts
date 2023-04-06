@@ -431,7 +431,6 @@ export function generateRefreshToken(){
         if (verifiedRefreshToken.payload == null) 
             throw new Error(verifiedRefreshToken.expired)
 
-        // generate a new access token using the refresh token 
         const userId = verifiedRefreshToken.payload.id
         const accessToken = await signAccessJwtToken(userId, client)
         const refreshToken = await signRefreshJwtToken(userId)
