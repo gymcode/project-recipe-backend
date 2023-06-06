@@ -19,7 +19,7 @@ const logger = new Logger()
 const port = process.env.PORT || "8080"
 const app: Express = express()
 
-app.use(cors()); /* NEW */
+app.use(cors()); 
 
 app.use(express.json())
 app.use('/haute-cuisine-api-docs', SwaggerUi.serve, SwaggerUi.setup(SwaggerDocs));
